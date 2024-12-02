@@ -220,3 +220,4 @@ widgetsnbextension==4.0.13
 wsproto==1.2.0
 xgboost==2.1.1
 zope.interface==7.0.3
+gunicorn==23.0.0
