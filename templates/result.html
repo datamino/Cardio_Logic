@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Analysis Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6584;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --card-bg: #ffffff;
+            --background: #f8fafc;
+            --highlight-bg: rgba(52, 152, 219, 0.1);
+            --highlight-color: #2ecc71;
+            --danger-color: #e74c3c;
+        }
+
+        body {
+            background: var(--background);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem 1rem;
+            color: var(--secondary-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 1rem 3rem;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .header i {
+            font-size: 2.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1.2); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1.2); }
+        }
+
+
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+
+
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h2 i {
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .card ul li {
+            padding: 1rem 1.5rem;
+            background: var(--highlight-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .card ul li:hover {
+            background: rgba(52, 152, 219, 0.15);
+            transform: translateX(5px);
+        }
+
+        .card ul li i {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            background: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+        }
+
+        .highlight {
+            color: var(--highlight-color);
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 4px;
+        }
+
+        .danger {
+            color: var(--danger-color);
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 4px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem auto 0;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+
+            .caution-text {
+                font-size: 1rem;
+                color: var(--danger-color);
+                text-align: center;
+                margin: 2rem 0;
+                padding: 0.5rem;
+                font-weight: 500;
+            }
+            
+            .caution-text i {
+                margin-right: 0.5rem;
+                color: var(--danger-color);
+            }
+            
+            
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> Prediction Results</h1>
+            <p>Your detailed heart disease analysis is below:</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-chart-pie"></i> Prediction Probability</h2>
+            <p>The probability of heart disease is <span class="highlight">{{ (probability * 100) | round(2) }}%</span>.</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle"></i> Risk Factors</h2>
+            {% if diseases %}
+                <ul>
+                {% for disease in diseases %}
+                    <li><i class="fas fa-exclamation-circle"></i> {{ disease.Disease }} (Linked to {{ disease.RiskFactor }})</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No significant diseases linked to your risk factors.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-user-md"></i> Symptoms to Monitor</h2>
+            {% if symptoms %}
+                <ul>
+                {% for symptom in symptoms %}
+                    <li><i class="fas fa-stethoscope"></i> {{ symptom.Symptom }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No symptoms identified based on your data.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-briefcase-medical"></i> Recommended Treatments</h2>
+            {% if treatments %}
+                <ul>
+                {% for treatment in treatments %}
+                    <li><i class="fas fa-pills"></i> {{ treatment.Treatment }} (For {{ treatment.Disease }})</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No treatments recommended at this time.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-shield-alt"></i> Preventive Measures</h2>
+            {% if preventive_measures %}
+                <ul>
+                {% for measure in preventive_measures %}
+                    <li><i class="fas fa-leaf"></i> {{ measure.Modification }} to reduce {{ measure.RiskFactor }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No preventive measures identified for your condition.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-microscope"></i> Suggested Diagnostic Tests</h2>
+            {% if diagnostic_tests %}
+                <ul>
+                {% for test in diagnostic_tests %}
+                    <li><i class="fas fa-vials"></i> {{ test.Test }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No diagnostic tests suggested at this time.</p>
+            {% endif %}
+        </div>
+        <p class="caution-text">
+           <center> <i class="fas fa-exclamation-triangle"></i> This analysis is not for practical use. Please consult a doctor for personalized care.</center>
+        </p>
+        
+        
+        
+
+        <a href="/" class="btn"><i class="fas fa-arrow-left"></i> Go Back</a>
+    </div>
+</body>
+</html>

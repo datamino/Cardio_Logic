@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6584;
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f6f8fb 0%, #e5ebf5 100%); 
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+    
+        }
+
+        .header p {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .header i {
+            font-size: 2.8rem;
+            animation: pulse 2s infinite;
+        }
+
+
+        @keyframes pulse {
+            0% { transform: scale(1.2); }
+            50% { transform: scale(1.4); }
+            100% { transform: scale(1.2); }
+        }
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            min-height: 100px; /* Adjusted height */
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ff8c9f 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 101, 132, 0.4);
+        }
+
+        .results {
+            display: none;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .result-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .result-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading i {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .separator {
+            border: 0;
+            height: 2px;
+            width:100%;
+            background-color: #ff6584; /* Red color for the separator */
+            margin: 4rem 0; /* Space above and below the separator */
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> CardioLogic: Explainable AI System</h1>
+            <p>A Machine Learning Heart Disease Prediction System and Explainable using Knowledge Graph</p>
+        </div>
+
+        <form id="predictionForm">
+            <div class="form-container">
+                <!-- Row 1 -->
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" class="form-control" name="age" min="30" max="80" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-control" name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Lifestyle Factors</h2>
+                    <div class="form-group">
+                        <label>Smoking</label>
+                        <select class="form-control" name="smoking" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Diet</label>
+                        <select class="form-control" name="diet" required>
+                            <option value="Poor">Poor</option>
+                            <option value="Average">Average</option>
+                            <option value="Healthy">Healthy</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Health History</h2>
+                    <div class="form-group">
+                        <label>Family History of Heart Disease</label>
+                        <select class="form-control" name="family_history" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Diabetes</label>
+                        <select class="form-control" name="diabetes" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                 <!-- Separator after Row 1 -->
+
+                <!-- Row 2 -->
+                <div class="form-section">
+                    <h2>Medical Conditions</h2>
+                    <div class="form-group">
+                        <label>Obesity</label>
+                        <select class="form-control" name="obesity" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Exercise Level</label>
+                        <select class="form-control" name="exercise" required>
+                            <option value="None">None</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Regular">Regular</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Clinical Measurements</h2>
+                    <div class="form-group">
+                        <label>Cholesterol (mg/dL)</label>
+                        <input type="number" class="form-control" name="cholesterol" min="100" max="400" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Resting Blood Pressure (mm Hg)</label>
+                        <input type="number" class="form-control" name="resting_bp" min="90" max="200" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Stress and Symptoms</h2>
+                    <div class="form-group">
+                        <label>Stress Level</label>
+                        <select class="form-control" name="stress_level" required>
+                            <option value="Low">Low</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Shortness of Breath</label>
+                        <select class="form-control" name="shortness_of_breath" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                
+
+                <!-- Row 3 -->
+                <div class="form-section">
+                    <h2>Heart Health</h2>
+                    <div class="form-group">
+                        <label>ECG Results</label>
+                        <select class="form-control" name="ecg_results" required>
+                            <option value="Normal">Normal</option>
+                            <option value="Abnormal">Abnormal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Max Heart Rate</label>
+                        <input type="number" class="form-control" name="max_heart_rate" min="60" max="200" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Chest Pain Indicators</h2>
+                    <div class="form-group">
+                        <label>Chest Pain Type</label>
+                        <select class="form-control" name="chest_pain_type" required>
+                            <option value="Typical">Typical</option>
+                            <option value="Atypical">Atypical</option>
+                            <option value="Non-Anginal">Non-Anginal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Palpitations</label>
+                        <select class="form-control" name="palpitations" required>
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dummy Section -->
+                <div class="form-section" style="grid-column: span 1;">
+                    <h2>Additional Information</h2>
+                    <p>This section can be used for any additional comments or information you would like to provide.</p>
+                    <textarea  style="resize: none;" class="form-control" rows="4" placeholder="Enter any additional information here..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-heartbeat"></i> Predict Heart Disease Risk
+            </button>
+        </form>
+
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Analyzing patient data...</p>
+        </div>
+
+        <div class="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            document.querySelector('.loading').style.display = 'block';
+            document.querySelector('.results').style.display = 'none';
+            
+            try {
+                // Submit the form data and redirect to the results page
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const resultsPage = await response.text();
+                    document.open();
+                    document.write(resultsPage);
+                    document.close();
+                } else {
+                    alert('Error: Could not load results.');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                document.querySelector('.loading').style.display = 'none';
+            }
+        });
+    </script>
+    
+</body>
+</html>
