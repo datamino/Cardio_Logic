@@ -34,7 +34,7 @@ class Neo4jHandler:
             result = session.run(query, parameters or {})
             return [record.data() for record in result]
 
-neo4j_handler =Neo4jHandler("neo4j+s://236a0d67.databases.neo4j.io", "neo4j", "02QPt5uF6aEaMu95O1MvxjGiLkN-BbNLmgzeAm6y8IM")
+neo4j_handler =Neo4jHandler("neo4j+s://d6d2eb69.databases.neo4j.io", "neo4j", "GgUHwsQN3_gTDb9CTY8VPebUr1jUsVQj6QGi9tlhLwU")
 
 # Flask App Initialization
 app = Flask(__name__)
